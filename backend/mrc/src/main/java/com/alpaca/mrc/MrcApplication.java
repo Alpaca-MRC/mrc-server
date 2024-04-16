@@ -1,13 +1,13 @@
-package com.alpaca.ARCRacing;
+package com.alpaca.mrc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ArcRacingApplication {
+public class MrcApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ArcRacingApplication.class, args);
+		SpringApplication.run(MrcApplication.class, args);
 	}
 
 }
