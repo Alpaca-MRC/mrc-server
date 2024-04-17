@@ -1,4 +1,4 @@
-package com.alpaca.mrc.domain.cart.entity;
+package com.alpaca.mrc.domain.shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

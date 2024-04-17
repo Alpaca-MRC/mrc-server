@@ -1,4 +1,4 @@
-package com.alpaca.mrc.domain.character.entity;
+package com.alpaca.mrc.domain.shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,16 +8,16 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Table(name = "character")
-public class Character {
+@Table(name = "avatar")
+public class Avatar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "character_name")
+    @Column(name = "avatar_name")
     private String name;
 
-    @Column(name = "character_prob")
+    @Column(name = "avatar_prob")
     private int prob;
 }

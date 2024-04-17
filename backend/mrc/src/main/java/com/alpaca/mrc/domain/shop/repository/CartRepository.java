@@ -1,6 +1,6 @@
-package com.alpaca.mrc.domain.cart.repository;
+package com.alpaca.mrc.domain.shop.repository;
 
-import com.alpaca.mrc.domain.cart.entity.Cart;
+import com.alpaca.mrc.domain.shop.entity.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
