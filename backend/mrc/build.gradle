@@ -35,10 +35,10 @@ dependencies {
 	// swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.16'
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+//	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
 	// aws s3
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+	implementation "org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE"
 	implementation 'net.coobird:thumbnailator:0.4.8'
 
 	// redis
