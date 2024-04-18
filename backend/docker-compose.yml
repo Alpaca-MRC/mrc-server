@@ -12,10 +12,22 @@ services:
     depends_on:
       - mysql
       - spring
+      - jenkins
     networks:
       - server-connection
+      - jenkins-connection
     ports:
       - "80:80"
+
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:jdk21
+    environment:
+      - TZ=Asia/Seoul
+    volumes:
+      - ${JENKINS_HOME}:/var/jenkins_home
+    networks:
+      - jenkins-connection
 
   spring:
     container_name: spring
@@ -56,4 +68,7 @@ networks:
     driver: bridge
 
   db-connection:
+    driver: bridge
+
+  jenkins-connection:
     driver: bridge
