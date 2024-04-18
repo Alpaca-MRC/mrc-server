@@ -620,4 +620,5 @@ package-lock.json
 # backend
 .idea/
 resources/
-Dockerfile
+docker/
+.env
