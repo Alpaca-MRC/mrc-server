@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.alpaca.mrc.domain.shop.ShopServiceImplTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-04-18T01:11:53" hostname="DESKTOP-LL832F4" time="0.866">
+  <properties/>
+  <testcase name="getRandomCartTest()" classname="com.alpaca.mrc.domain.shop.ShopServiceImplTest" time="0.86"/>
+  <testcase name="getRandomAvatarTest()" classname="com.alpaca.mrc.domain.shop.ShopServiceImplTest" time="0.005"/>
+  <system-out><![CDATA[Random Cart: Cart3
+Random Avatar: Avatar1
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\SSAFY\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.12\be4984cb6fd1ef1d11f218a648889dfda44b8a15\byte-buddy-agent-1.14.12.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

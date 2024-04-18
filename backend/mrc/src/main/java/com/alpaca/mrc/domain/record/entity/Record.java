@@ -1,5 +1,7 @@
 package com.alpaca.mrc.domain.record.entity;
 
+import com.alpaca.mrc.domain.game.util.GameMode;
+import com.alpaca.mrc.domain.game.util.GamePlayerNum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,15 +32,25 @@ public class Record {
     @Column(name = "game_mode")
     private GameMode gameMode;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "game_player_num")
+    private GamePlayerNum gamePlayerNum;
+
     @Column(name = "is_win")
     private boolean isWin;
 
-    @Column(name = "map")
-    private String map;
+    @Column(name = "map_url")
+    private String mapUrl;
 
-    @Column(name = "replay")
-    private String replay;
+    @Column(name = "replay_url")
+    private String replayUrl;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+    }
 }
