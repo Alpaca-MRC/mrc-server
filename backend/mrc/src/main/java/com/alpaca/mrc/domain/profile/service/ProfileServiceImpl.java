@@ -19,7 +19,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final CartRepository cartRepository;
     private final AvatarRepository avatarRepository;
 
-    public ProfileGetCartResponseDTO getCart() {
+        public ProfileGetCartResponseDTO getCart() {
 
         // 유저 조회
 
