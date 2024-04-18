@@ -1,0 +1,59 @@
+version: "3"
+services:
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: always
+    environment:
+      - TZ=Asia/Seoul
+    volumes:
+      - ${NGINX_CONFIG}:/etc/nginx/conf.d
+    depends_on:
+      - mysql
+      - spring
+    networks:
+      - server-connection
+    ports:
+      - "80:80"
+
+  spring:
+    container_name: spring
+    build:
+      context: ./mrc
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - mysql
+    networks:
+      - server-connection
+      - db-connection
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    restart: always
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_HOST=${MYSQL_ROOT_HOST}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - TZ=Asia/Seoul
+    volumes:
+      - ${MYSQL_DATA_PATH}:/var/lib/mysql
+      - ${MYSQL_CONFIG_PATH}:/etc/mysql/conf.d
+#      - ${MYSQL_INIT_PATH}:/docker-entrypoint-initdb.d
+    networks:
+      - db-connection
+
+networks:
+
+  server-connection:
+    driver: bridge
+
+  db-connection:
+    driver: bridge
