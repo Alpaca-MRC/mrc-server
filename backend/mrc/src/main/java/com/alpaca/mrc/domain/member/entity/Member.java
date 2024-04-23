@@ -1,12 +1,17 @@
 package com.alpaca.mrc.domain.member.entity;
 
+import com.alpaca.mrc.domain.record.entity.Record;
+import com.alpaca.mrc.domain.shop.entity.MyAvatar;
+import com.alpaca.mrc.domain.shop.entity.MyCart;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -16,6 +21,18 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Record> records;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<MyCart> myCarts;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<MyAvatar> myAvatars;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "username")
     private String username;
@@ -28,6 +45,12 @@ public class Member {
 
     @Column(name = "coin")
     private int coin;
+
+    @Column(name = "selected_cart_name")
+    private String selectedCartName;
+
+    @Column(name = "selected_avatar_name")
+    private String selectedAvatarName;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -45,5 +68,13 @@ public class Member {
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateSelectedCartName(String name) {
+        this.selectedCartName = name;
+    }
+
+    public void updateSelectedAvatarName(String name) {
+        this.selectedAvatarName = name;
     }
 }
