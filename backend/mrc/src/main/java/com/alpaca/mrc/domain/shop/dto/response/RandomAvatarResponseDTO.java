@@ -1,19 +1,14 @@
 package com.alpaca.mrc.domain.shop.dto.response;
 
-import lombok.AllArgsConstructor;
+import com.alpaca.mrc.domain.shop.entity.Avatar;
 import lombok.Builder;
-import lombok.Getter;
 
 @Builder
-@Getter
-@AllArgsConstructor
-public class RandomAvatarResponseDTO {
+public record RandomAvatarResponseDTO(Avatar avatar) {
 
-    private String name;
-
-    public static RandomAvatarResponseDTO of(String name) {
+    public static RandomAvatarResponseDTO of(Avatar avatar) {
         return RandomAvatarResponseDTO.builder()
-                .name(name)
+                .avatar(avatar)
                 .build();
     }
 }

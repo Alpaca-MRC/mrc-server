@@ -1,6 +1,6 @@
 package com.alpaca.mrc.domain.shop.entity;
 
-import com.alpaca.mrc.domain.shop.Service.ShopServiceImpl.ProductWithProbability;
+import com.alpaca.mrc.domain.shop.util.ItemGrade;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Table(name = "avatar")
-public class Avatar implements ProductWithProbability {
+public class Avatar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,9 @@ public class Avatar implements ProductWithProbability {
     @Column(name = "avatar_name")
     private String name;
 
-    @Column(name = "avatar_prob")
-    private double prob;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "avatar_grade")
+    private ItemGrade grade;
 
-//    @Override
-//    public double getProb() {
-//        return this.prob;
-//    }
+
 }
