@@ -15,7 +15,6 @@ services:
       - jenkins
     networks:
       - server-connection
-      - jenkins-connection
     ports:
       - "80:80"
 
@@ -27,12 +26,12 @@ services:
     volumes:
       - ${JENKINS_HOME}:/var/jenkins_home
     networks:
-      - jenkins-connection
+      - server-connection
 
   spring:
     container_name: spring
     build:
-      context: ./mrc
+      context: backend/mrc
       dockerfile: Dockerfile
     restart: always
     depends_on:
@@ -68,7 +67,4 @@ networks:
     driver: bridge
 
   db-connection:
-    driver: bridge
-
-  jenkins-connection:
     driver: bridge
