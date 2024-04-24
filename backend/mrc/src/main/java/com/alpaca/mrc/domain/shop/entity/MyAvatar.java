@@ -26,4 +26,16 @@ public class MyAvatar {
 
     @Column(name = "is_selected")
     private boolean isSelected;
+
+    public void updateIsSelected() {
+        this.isSelected = !this.isSelected;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        if (member != null) {
+            member.getMyAvatars().add(this);
+        }
+    }
+
 }

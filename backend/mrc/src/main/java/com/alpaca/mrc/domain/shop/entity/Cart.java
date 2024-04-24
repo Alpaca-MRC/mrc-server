@@ -1,6 +1,6 @@
 package com.alpaca.mrc.domain.shop.entity;
 
-import com.alpaca.mrc.domain.shop.Service.ShopServiceImpl.ProductWithProbability;
+import com.alpaca.mrc.domain.shop.util.ItemGrade;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Table(name = "cart")
-public class Cart implements ProductWithProbability {
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,7 @@ public class Cart implements ProductWithProbability {
     @Column(name = "cart_name")
     private String name;
 
-    @Column(name = "cart_prob")
-    private double prob;
-
-    @Override
-    public double getProb() {
-        return this.prob;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cart_grade")
+    private ItemGrade grade;
 }

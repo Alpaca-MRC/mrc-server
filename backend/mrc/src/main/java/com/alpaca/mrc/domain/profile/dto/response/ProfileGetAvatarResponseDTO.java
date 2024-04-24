@@ -1,11 +1,15 @@
 package com.alpaca.mrc.domain.profile.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+
+import java.util.List;
 
 @Builder
-@Getter
-@AllArgsConstructor
-public class ProfileGetAvatarResponseDTO {
+public record ProfileGetAvatarResponseDTO(List<AvatarDTO> avatars) {
+
+    public static ProfileGetAvatarResponseDTO of(List<AvatarDTO> avatars) {
+        return ProfileGetAvatarResponseDTO.builder()
+                .avatars(avatars)
+                .build();
+    }
 }

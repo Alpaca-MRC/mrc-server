@@ -23,28 +23,29 @@ public class ProfileController {
     @GetMapping("/cart")
     public ResponseEntity<ResultResponse> getCart() {
 
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.SUCCESS, profileService.getCart()));
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.PROFILE_GET_CART_SUCCESS, profileService.getCart()));
     }
 
     @Operation(summary = "카트 변경")
     @PostMapping("/cart")
-    public ResponseEntity<ResultResponse> updateCart(@RequestBody ProfileUpdateCartRequsetDTO requestDTO) {
-
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.SUCCESS, profileService.updateCart(requestDTO)));
+    public ResponseEntity<ResultResponse> changeCart(@RequestBody ProfileUpdateCartRequsetDTO requestDTO) {
+        profileService.changeCart(requestDTO);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.PROFILE_CHANGE_CART_SUCCESS));
     }
 
     @Operation(summary = "아바타 조회")
     @GetMapping("/avatar")
     public ResponseEntity<ResultResponse> getAvatar() {
 
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.SUCCESS, profileService.getAvatar()));
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.PROFILE_GET_AVATAR_SUCCESS, profileService.getAvatar()));
     }
 
     @Operation(summary = "아바타 변경")
     @PostMapping("/avatar")
-    public ResponseEntity<ResultResponse> updateAvatar(@RequestBody ProfileUpdateAvatarRequestDTO requestDTO) {
+    public ResponseEntity<ResultResponse> changeAvatar(@RequestBody ProfileUpdateAvatarRequestDTO requestDTO) {
 
-        return ResponseEntity.ok(ResultResponse.of(ResultCode.SUCCESS, profileService.updateAvatar(requestDTO)));
+        profileService.changeAvatar(requestDTO);
+        return ResponseEntity.ok(ResultResponse.of(ResultCode.PROFILE_CHANGE_AVATAR_SUCCESS));
     }
 
 

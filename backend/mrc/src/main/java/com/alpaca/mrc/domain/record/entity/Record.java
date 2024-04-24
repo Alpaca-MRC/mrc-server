@@ -2,6 +2,7 @@ package com.alpaca.mrc.domain.record.entity;
 
 import com.alpaca.mrc.domain.game.util.GameMode;
 import com.alpaca.mrc.domain.game.util.GamePlayerNum;
+import com.alpaca.mrc.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(name = "lap_time")
     private LocalDateTime lapTime;
@@ -50,7 +55,6 @@ public class Record {
 
     @PrePersist
     public void prePersist() {
-        LocalDateTime now = LocalDateTime.now();
-        this.createdAt = now;
+        this.createdAt = LocalDateTime.now();
     }
 }

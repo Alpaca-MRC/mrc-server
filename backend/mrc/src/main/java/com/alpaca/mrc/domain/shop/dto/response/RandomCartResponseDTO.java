@@ -1,19 +1,14 @@
 package com.alpaca.mrc.domain.shop.dto.response;
 
-import lombok.AllArgsConstructor;
+import com.alpaca.mrc.domain.shop.entity.Cart;
 import lombok.Builder;
-import lombok.Getter;
 
 @Builder
-@Getter
-@AllArgsConstructor
-public class RandomCartResponseDTO {
+public record RandomCartResponseDTO(Cart cart) {
 
-    private String name;
-
-    public static RandomCartResponseDTO of(String name) {
+    public static RandomCartResponseDTO of(Cart cart) {
         return RandomCartResponseDTO.builder()
-                .name(name)
+                .cart(cart)
                 .build();
     }
 }
