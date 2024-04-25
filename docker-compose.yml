@@ -9,10 +9,6 @@ services:
       - TZ=Asia/Seoul
     volumes:
       - ${NGINX_CONFIG}:/etc/nginx/conf.d
-    depends_on:
-      - mysql
-      - spring
-      - jenkins
     networks:
       - server-connection
     ports:
