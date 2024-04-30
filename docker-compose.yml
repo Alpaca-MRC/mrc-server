@@ -1,29 +1,6 @@
 version: "3"
 services:
 
-  nginx:
-    container_name: nginx
-    image: nginx
-    restart: always
-    environment:
-      - TZ=Asia/Seoul
-    volumes:
-      - ${NGINX_CONFIG}:/etc/nginx/conf.d
-    networks:
-      - server-connection
-    ports:
-      - "80:80"
-
-  jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins:jdk21
-    environment:
-      - TZ=Asia/Seoul
-    volumes:
-      - ${JENKINS_HOME}:/var/jenkins_home
-    networks:
-      - server-connection
-
   spring:
     container_name: spring
     build:
@@ -33,7 +10,6 @@ services:
     depends_on:
       - mysql
     networks:
-      - server-connection
       - db-connection
 
   mysql:
@@ -58,9 +34,6 @@ services:
       - db-connection
 
 networks:
-
-  server-connection:
-    driver: bridge
 
   db-connection:
     driver: bridge
