@@ -32,6 +32,8 @@ services:
 #      - ${MYSQL_INIT_PATH}:/docker-entrypoint-initdb.d
     networks:
       - db-connection
+    ports:
+      - ${MYSQL_PORT}
 
 networks:
 
