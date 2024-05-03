@@ -648,3 +648,4 @@ package-lock.json
 resources/
 docker/
 .env
+redis/

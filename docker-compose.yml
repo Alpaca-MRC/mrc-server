@@ -44,10 +44,11 @@ services:
     image: redis
     command:
       - --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - ${REDIS_DATA_PATH}:/data
+      - ${REDIS_CONFIG}:/usr/local/etc/redis/redis.conf
     networks:
       - redis-connection
-
-
 
 networks:
 
