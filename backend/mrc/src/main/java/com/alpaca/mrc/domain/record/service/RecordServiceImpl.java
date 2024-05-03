@@ -27,7 +27,6 @@ public class RecordServiceImpl {
     private final Member member = Member.builder()
             .id(1L)
             .records(records)
-            .email("test@test.com")
             .username("김주피")
             .nickname("테스트")
             .iconUrl("s3.com")

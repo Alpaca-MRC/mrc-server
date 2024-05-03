@@ -31,19 +31,20 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<MyAvatar> myAvatars;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "username")
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", nullable = false)
     private String nickname;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", nullable = false)
+    private AccountType accountType;
 
     @Column(name = "icon_url")
     private String iconUrl;
 
-    @Column(name = "coin")
+    @Column(name = "coin", columnDefinition = "int default 0")
     private int coin;
 
     @Column(name = "selected_cart_name")

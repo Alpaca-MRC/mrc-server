@@ -42,7 +42,6 @@ dependencies {
 	implementation 'net.coobird:thumbnailator:0.4.8'
 
 	// redis
-	implementation 'net.nurigo:sdk:4.3.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	compileOnly 'org.projectlombok:lombok'

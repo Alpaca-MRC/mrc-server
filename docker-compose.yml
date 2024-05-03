@@ -9,8 +9,12 @@ services:
     restart: always
     depends_on:
       - mysql
+      - redis
+    ports:
+      - "8080:8080"
     networks:
       - db-connection
+      - redis-connection
 
   mysql:
     container_name: mysql
@@ -35,7 +39,20 @@ services:
     ports:
       - ${MYSQL_PORT}
 
+  redis:
+    container_name: redis
+    image: redis
+    command:
+      - --requirepass ${REDIS_PASSWORD}
+    networks:
+      - redis-connection
+
+
+
 networks:
 
   db-connection:
+    driver: bridge
+
+  redis-connection:
     driver: bridge

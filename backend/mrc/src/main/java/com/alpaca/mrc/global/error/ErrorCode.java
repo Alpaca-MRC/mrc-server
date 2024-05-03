@@ -21,6 +21,8 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(404, "ME001", "존재하지 않는 유저입니다."),
     MEMBER_DUFLICATED(409, "ME002", "중복된 유저입니다."),
 
+    // ROOM
+    ROOM_NOT_FOUND(404, "RE001", "방을 찾을 수 없습니다."),
 
     // RECORD
 
@@ -32,7 +34,6 @@ public enum ErrorCode {
     SHOP_MY_AVATAR_DUPLICATED(409, "SE003", "이미 소유하고 있는 아바타입니다."),
     SHOP_MY_CART_DUPLICATED(409, "SE004", "이미 소유하고 있는 카트입니다."),
     ;
-
 
     private final int status;
     private final String code;
