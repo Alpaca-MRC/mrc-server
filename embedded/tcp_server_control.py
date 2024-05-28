@@ -9,12 +9,15 @@ data_queue = queue.Queue()  # Create a queue to store received data
 direction_queue = queue.Queue()
 main_queue = queue.Queue()
 
-serverSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSock.bind(('', 25001))
-#serverSock.listen(1)
+serverSock.listen(1)
 print("waiting connect...")
 
 running_thread = True
+
+# # set timeout 2 min
+# serverSock.settimeout(120)
 
 def angle_to_percent(angle):
     if angle > 180 or angle < 0:
@@ -27,6 +30,66 @@ def angle_to_percent(angle):
     angle_as_percent = angle * ratio
 
     return start + angle_as_percent
+
+
+def serial_thread():
+    global running_thread
+    global serverSock
+
+    # set clientSocket
+    connectionSock, addr = serverSock.accept()
+    print("Connect accept.")
+    connectionSock.send('hi, i\'m RCcar'.encode('utf-8'))
+
+    try:
+        while running_thread is True:
+            # a/b/c = -4 <= a <= 4, a = left, right, b= go, c = back
+            receiveddata = connectionSock.recv(1024).decode('utf-8').strip()
+
+            print(receiveddata)
+
+            receivedlis = list(receiveddata.split("_"))
+
+            for i in range(len(receivedlis) - 1):
+                if receivedlis[i] == "close":
+                    print("client close socket")
+                    # close this socket
+                    time.sleep(1)
+                    print("waiting connect...")
+                    connectionSock, addr = serverSock.accept()
+                    print("Connect accept.")
+                    connectionSock.send('hi, i\'m RCcar'.encode('utf-8'))
+                    break
+
+                else:
+                    print(receivedlis[i])
+                    commands = list(map(int, receivedlis[i].split("/")))
+                    direction_queue.put(commands[0])
+                    data_queue.put((commands[1], commands[2]))
+                    print('Received Data:', commands)
+                    print(commands[0], commands[1], commands[2])
+
+    except Exception as e:
+        print(e)
+        running_thread = False
+
+    finally:
+        # connectionSock.send('close'.encode('utf-8'))
+        connectionSock.close()
+        print("socket thread over")
+
+
+def control_speed(pwm, in1, in2, speed, state):
+    if state == 1:
+        GPIO.output(in1, HIGH)
+        GPIO.output(in2, LOW)
+        pwm.ChangeDutyCycle(speed)
+
+    elif state == -1:
+        GPIO.output(in1, LOW)
+        GPIO.output(in2, HIGH)
+        pwm.ChangeDutyCycle(speed)
+
 
 # PIN input output set
 OUTPUT = 1
@@ -56,63 +119,6 @@ DCpwm.start(0)
 GPIO.setup(servo_pin, GPIO.OUT)
 servoPwm = GPIO.PWM(servo_pin, 50)
 servoPwm.start(angle_to_percent(90))
-
-# # set timeout 2 min
-# serverSock.settimeout(120)
-
-
-def serial_thread():
-    global running_thread
-    global serverSock
-
-    try:
-        while running_thread is True:
-            # a/b/c = -4 <= a <= 4, a = left, right, b= go, c = back
-            data, address = serverSock.recvfrom(4096)
-            print(f'{address} connect my server')
-
-            receiveddata = data.decode('utf-8').strip()
-
-            print(receiveddata)
-
-            receivedlis = list(receiveddata.split("_"))
-
-            for i in range(len(receivedlis) - 1):
-                if receivedlis[i] == "close":
-                    print("client close socket")
-                    # close this socket
-                    time.sleep(1)
-                    print("waiting connect...")
-                    break
-
-                else:
-                    print(receivedlis[i])
-                    commands = list(map(int, receivedlis[i].split("/")))
-                    direction_queue.put(commands[0])
-                    data_queue.put((commands[1], commands[2]))
-                    print('Received Data:', commands)
-                    print(commands[0], commands[1], commands[2])
-
-    except Exception as e:
-        print(e)
-        running_thread = False
-
-    finally:
-        # connectionSock.send('close'.encode('utf-8'))
-        serverSock.close()
-        print("socket thread over")
-
-
-def control_speed(pwm, in1, in2, speed, state):
-    if state == 1:
-        GPIO.output(in1, HIGH)
-        GPIO.output(in2, LOW)
-        pwm.ChangeDutyCycle(speed)
-
-    elif state == -1:
-        GPIO.output(in1, LOW)
-        GPIO.output(in2, HIGH)
-        pwm.ChangeDutyCycle(speed)
 
 
 def main_speed():
@@ -196,11 +202,6 @@ def main_direction():
         while running_thread is True:
             if not direction_queue.empty():  # Check if data is present in the queue
                 data = direction_queue.get()  # Get data from the queue
-                if data == -5:
-                    data = -4
-                elif data == 5:
-                    data = 4
-
                 if now_servo != data:
                     called = False
                     now_servo = data
